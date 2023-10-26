@@ -1,15 +1,16 @@
 #include "tools.hpp"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <filesystem>
-
+#define RESET "\033[0m"
+#define RED "\033[31m"
 /**
  * write string str to addr.
  * writetype: {
  *      a: add
  *      o: overwrite
  *    }
-*/
+ */
 int write_to_file(const std::string &str, const std::string &addr,
                   char writetype) {
   std::ofstream file;
@@ -32,11 +33,10 @@ int write_to_file(const std::string &str, const std::string &addr,
   return 0;
 }
 
-
 /**
  * check_file_exist_delete
  * To check if the addr has cached file, if yeap, delete it.
-*/
+ */
 int check_file_exist_delete(const std::string &file) {
 
   if (std::filesystem::exists(file)) {
@@ -53,4 +53,8 @@ int check_file_exist_delete(const std::string &file) {
   }
 
   return 1;
+}
+
+void printError(const std::string &error) {
+  std::cerr << RED << error << RESET << std::endl;
 }

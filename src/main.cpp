@@ -8,5 +8,6 @@ using json = nlohmann::json;
 
 int main() {
   create_info_json();
+  // boost_process("/home/sokee/Desktop/Monitor-Inband-Getter/src");
   return 0;
 }

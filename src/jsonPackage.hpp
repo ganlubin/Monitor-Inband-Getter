@@ -6,6 +6,6 @@ using json = nlohmann::json;
 #include <iostream>
 
 
-json create_info_json();
+int create_info_json();
 
 #endif
