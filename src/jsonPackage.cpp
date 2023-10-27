@@ -45,14 +45,24 @@ int create_info_json() {
   }
 
   json json_info;
-  json_info["system"] = {};
 
+  // system_info write
+  json_info["system"] = {};
   int r = system_info(Boost_process_info_system, json_info);
   if (!r) {
     printError("Get system_info Error.\n");
     return 0;
   }
 
+
+
+  // process_info write
+  json_info["processes"] = {};
+  
+
+
+
+  // output file
   r = output_json(json_info);
   if (!r) {
     printError("output json file failed.\n");

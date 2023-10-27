@@ -7,7 +7,7 @@ using json = nlohmann::json;
 #include "jsonPackage.hpp"
 
 int main() {
+  boost_process("/home/sokee/Desktop/Monitor-Inband-Getter/src");
   create_info_json();
-  // boost_process("/home/sokee/Desktop/Monitor-Inband-Getter/src");
   return 0;
 }

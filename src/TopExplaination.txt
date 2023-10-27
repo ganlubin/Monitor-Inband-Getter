@@ -43,3 +43,76 @@ S: process status
 %MEM: process %MEM
 TIME+: process time total(1/100 s)
 COMMAND: process used name
+
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.2 166652 10564 ?        Ss   15:05   0:02 /sbin/init auto noprompt splash
+root           2  0.0  0.0      0     0 ?        S    15:05   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   15:05   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   15:05   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   15:05   0:00 [slub_flushwq]
+
+tid: 1
+ppid: 0
+maj_delta: 0
+min_delta: 0
+pcpu: 0
+state: 83
+utime: 67
+stime: 385
+cutime: 1640
+cstime: 1141
+start_time: 75
+start_code: 1
+end_code: 1
+start_stack: 0
+kstk_esp: 0
+kstk_eip: 0
+wchan: 0
+priority: 20
+nice: 0
+rss: 2455
+alarm: 0
+size: 41971
+resident: 2455
+share: 1239
+trs: 224
+lrs: 0
+drs: 5287
+dt: 0
+vm_size: 0
+vm_lock: 0
+vm_rss: 0
+vm_rss_anon: 0
+vm_rss_shared: 0
+vm_data: 0
+vm_stack: 0
+vm_swap: 0
+vm_exe: 0
+vm_lib: 0
+rtprio: 0
+sched: 0
+vsize: 171913216
+rss_rlim: 18446744073709551615
+flags: 4194560
+maj_flt: 172
+min_flt: 26575
+cmaj_flt: 1725
+cmin_flt: 472298
+cmd: systemdpgrp: 1
+session: 1
+nlwp: 1
+tgid: 1
+tty: 0
+euid: 0
+egid: 0
+ruid: 0
+rgid: 0
+suid: 0
+sgid: 0
+fuid: 0
+fgid: 0
+tpgid: -1
+exit_signal: 17
+processor: 1
+oom_score: 0
+oom_adj: 0
