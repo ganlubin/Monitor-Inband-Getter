@@ -1,1 +1,39 @@
-{"system":{"current time":"16:37:12","system running time":8113,"system users number":1}}
+{
+    "system": {
+        "1 min load average": 0.84,
+        "15 min load average": 0.56,
+        "5 min load average": 0.56,
+        "Cpu(s)": {
+            "IO wait": 0.0,
+            "hardware IRQ": 0.0,
+            "hpyervisor": 0.0,
+            "idle": 50.0,
+            "nice": 0.0,
+            "software IRQ": 0.0,
+            "system": 9.4,
+            "user": 40.6
+        },
+        "Swap(MiB)": {
+            "avail": 1291.8,
+            "free": 2059.5,
+            "total": 2140.0,
+            "used": 80.5
+        },
+        "Tasks": {
+            "running": 1,
+            "sleeping": 300,
+            "stopped": 0,
+            "total": 301,
+            "zombie": 0
+        },
+        "current time": "16:37:12",
+        "physical memory(MiB)": {
+            "buff/cache": 1107.8,
+            "free": 477.2,
+            "total": 3871.5,
+            "used": 2286.5
+        },
+        "system running time": 8113,
+        "system users number": 1
+    }
+}
