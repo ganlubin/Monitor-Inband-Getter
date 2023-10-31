@@ -5,7 +5,6 @@ using json = nlohmann::json;
 
 #include <iostream>
 
-
 int create_info_json();
 
 #endif

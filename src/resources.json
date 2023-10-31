@@ -1,40 +1,40 @@
 {
-    "processes": null,
+    "processes": [],
     "system": {
-        "1 min load average": 1.38,
-        "15 min load average": 0.29,
-        "5 min load average": 0.49,
+        "1 min load average": 1.1,
+        "15 min load average": 0.36,
+        "5 min load average": 0.5,
         "Cpu(s)": {
             "IO wait": 0.0,
             "hardware IRQ": 0.0,
             "hpyervisor": 0.0,
-            "idle": 0.0,
+            "idle": 51.6,
             "nice": 0.0,
             "software IRQ": 0.0,
-            "system": 27.8,
-            "user": 72.2
+            "system": 19.4,
+            "user": 29.0
         },
         "Swap(MiB)": {
-            "avail": 1305.6,
-            "free": 2016.6,
+            "avail": 1062.1,
+            "free": 1905.3,
             "total": 2140.0,
-            "used": 123.4
+            "used": 234.7
         },
         "Tasks": {
             "running": 2,
-            "sleeping": 295,
+            "sleeping": 294,
             "stopped": 0,
-            "total": 297,
+            "total": 296,
             "zombie": 0
         },
-        "current time": "16:52:48",
+        "current time": "17:31:23",
         "physical memory(MiB)": {
-            "buff/cache": 1122.6,
-            "free": 489.6,
-            "total": 3871.6,
-            "used": 2259.3
+            "buff/cache": 873.3,
+            "free": 485.3,
+            "total": 3871.5,
+            "used": 2512.9
         },
-        "system running time": 439,
+        "system running time": 440,
         "system users number": 1
     }
 }

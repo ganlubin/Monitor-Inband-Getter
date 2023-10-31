@@ -6,13 +6,14 @@
 #include <iostream>
 #include <sstream>
 #include <utility>
+#include <vector>
 
 using json = nlohmann::json;
 
 int output_json(const json &);
 std::pair<std::string, int> findFromFile_system_info(const std::string &,
                                                      const std::string &);
-int system_info(std::ifstream &, json &);
+int system_info(const std::ifstream &, json &);
 int running_minutes(const std::pair<std::string, int> &);
 int system_users(const std::pair<std::string, int> &);
 void setSystem_load_average(json &, const std::pair<std::string, int> &);
@@ -20,6 +21,7 @@ void system_tasks(json &, const std::pair<std::string, int> &);
 void system_cpus(json &, const std::pair<std::string, int> &);
 void system_memory(json &, const std::pair<std::string, int> &);
 void system_swap(json &, const std::pair<std::string, int> &);
+int process_info(std::ifstream &, json &);
 
 int create_info_json() {
   // clear cached file
@@ -50,17 +52,17 @@ int create_info_json() {
   json_info["system"] = {};
   int r = system_info(Boost_process_info_system, json_info);
   if (!r) {
-    printError("Get system_info Error.\n");
+    printError("Get system_info Error.");
     return 0;
   }
 
-
-
   // process_info write
-  json_info["processes"] = {};
-  
-
-
+  json_info["processes"] = json::array();
+  r = process_info(Boost_process_info_process, json_info);
+  if (!r) {
+    printError("Get process_info Error.");
+    return 0;
+  }
 
   // output file
   r = output_json(json_info);
@@ -72,7 +74,65 @@ int create_info_json() {
   return 1;
 }
 
-int system_info(std::ifstream &Boost_process_info_system, json &json_info) {
+typedef struct proc {
+  std::string USER;
+  int PID;
+  float CPU;
+  float MEM;
+  int VSZ;
+  int RSS;
+  std::string TTY;
+  std::string STAT;
+  std::string START;
+  std::string TIME;
+  std::string COMMAND;
+} PROC_INFO;
+
+int process_info(std::ifstream &Boost_process_info_process, json &json_info) {
+
+  std::string key = "";
+  std::ofstream outputFile("output.txt", std::ios_base::app);
+  std::getline(Boost_process_info_process, key);
+  int size = 0;
+  while (std::getline(Boost_process_info_process, key)) {
+    size++;
+  }
+
+  Boost_process_info_process.clear();                 // reset ifstream
+  Boost_process_info_process.seekg(0, std::ios::beg); // reset ifstream
+
+  // init PROC_INFO arrays
+  std::vector<PROC_INFO> procs;
+
+  std::getline(Boost_process_info_process, key);
+  while (std::getline(Boost_process_info_process, key)) {
+    int idx = 0;
+    int proc_idx = 0;
+    // USER
+    std::string USER = "";
+    for (;; idx++) {
+      if (key[idx] == ' ') {
+        procs[proc_idx++].USER = USER;
+        for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+        }
+        break;
+      } else {
+        
+      }
+    }
+  }
+
+  return 1;
+}
+
+void write_process_t_json(const std::vector<PROC_INFO> &procs, json json_info) {
+  for (const auto &proc : procs) {
+    json_info["processes"].push_back({{"USER", proc.USER} });
+  }
+}
+
+int system_info(const std::ifstream &Boost_process_info_system,
+                json &json_info) {
   // explain the system_info
   std::string key;
   std::stringstream buffer;
