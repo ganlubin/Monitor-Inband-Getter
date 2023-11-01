@@ -29,7 +29,7 @@ int boost_process(const std::string &addr) {
          !system_info.empty()) {
     write_to_file(system_info + '\n', system_addr, 'a');
   }
-  std::cout << "write successfully" << '\n';
+  // std::cout << "write successfully" << '\n';
 
   // processes'info
   bp::ipstream process_info_stream;
@@ -39,7 +39,7 @@ int boost_process(const std::string &addr) {
          !process_info.empty()) {
     write_to_file(process_info + '\n', process_addr, 'a');
   }
-  std::cout << "write successfully" << '\n';
+  // std::cout << "write successfully" << '\n';
 
   return 0;
 }

@@ -7,6 +7,7 @@
 #include <sstream>
 #include <utility>
 #include <vector>
+#include <cmath>
 
 using json = nlohmann::json;
 
@@ -22,6 +23,23 @@ void system_cpus(json &, const std::pair<std::string, int> &);
 void system_memory(json &, const std::pair<std::string, int> &);
 void system_swap(json &, const std::pair<std::string, int> &);
 int process_info(std::ifstream &, json &);
+
+typedef struct proc {
+  std::string USER;
+  int PID;
+  float CPU;
+  float MEM;
+  int VSZ;
+  int RSS;
+  std::string TTY;
+  std::string STAT;
+  std::string START;
+  std::string TIME;
+  std::string COMMAND;
+} PROC_INFO;
+
+void readProcess(const std::string &, PROC_INFO &, json &);
+void write_process_t_json(const PROC_INFO &, json &);
 
 int create_info_json() {
   // clear cached file
@@ -57,7 +75,6 @@ int create_info_json() {
   }
 
   // process_info write
-  json_info["processes"] = json::array();
   r = process_info(Boost_process_info_process, json_info);
   if (!r) {
     printError("Get process_info Error.");
@@ -74,20 +91,6 @@ int create_info_json() {
   return 1;
 }
 
-typedef struct proc {
-  std::string USER;
-  int PID;
-  float CPU;
-  float MEM;
-  int VSZ;
-  int RSS;
-  std::string TTY;
-  std::string STAT;
-  std::string START;
-  std::string TIME;
-  std::string COMMAND;
-} PROC_INFO;
-
 int process_info(std::ifstream &Boost_process_info_process, json &json_info) {
 
   std::string key = "";
@@ -101,34 +104,137 @@ int process_info(std::ifstream &Boost_process_info_process, json &json_info) {
   Boost_process_info_process.clear();                 // reset ifstream
   Boost_process_info_process.seekg(0, std::ios::beg); // reset ifstream
 
-  // init PROC_INFO arrays
-  std::vector<PROC_INFO> procs;
-
   std::getline(Boost_process_info_process, key);
+  PROC_INFO proc_temp;
   while (std::getline(Boost_process_info_process, key)) {
-    int idx = 0;
-    int proc_idx = 0;
-    // USER
-    std::string USER = "";
-    for (;; idx++) {
-      if (key[idx] == ' ') {
-        procs[proc_idx++].USER = USER;
-        for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
-        }
-        break;
-      } else {
-        
-      }
-    }
+    readProcess(key, proc_temp, json_info);
   }
-
   return 1;
 }
 
-void write_process_t_json(const std::vector<PROC_INFO> &procs, json json_info) {
-  for (const auto &proc : procs) {
-    json_info["processes"].push_back({{"USER", proc.USER} });
+void readProcess(const std::string &key, PROC_INFO &proc_temp,
+                 json &json_info) {
+  int idx = 0;
+  std::string temp = "";
+
+  // USER
+  for (; key[idx] != 0x20; idx++) {
+    temp += key[idx];
   }
+  proc_temp.USER = temp;
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // PID
+  for (; key[idx] >= '0' && key[idx] <= '9'; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.PID = atoi(temp.c_str());
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // %CPU
+  for (; key[idx] >= '0' && key[idx] <= '9' || key[idx] == '.'; idx++) {
+    temp += key[idx];
+  }
+  float cpu_val = atof(temp.c_str());
+  float cpu_rounded_val = std::round(cpu_val * 100.0) / 100.0;
+  proc_temp.CPU = cpu_rounded_val;
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // %MEM
+  for (; key[idx] >= '0' && key[idx] <= '9' || key[idx] == '.'; idx++) {
+    temp += key[idx];
+  }
+  float mem_val = atof(temp.c_str());
+  float mem_rounded_val = std::round(mem_val * 100.0) / 100.0;
+  proc_temp.MEM = mem_rounded_val;
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // VSZ
+  for (; key[idx] >= '0' && key[idx] <= '9'; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.VSZ = atoi(temp.c_str());
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // RSS
+  for (; key[idx] >= '0' && key[idx] <= '9'; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.RSS = atoi(temp.c_str());
+  temp = "";
+  for (; key[idx] == 0x20; idx++) {
+  }
+
+  // TTY
+  for (; key[idx] != 0x20; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.TTY = temp;
+  temp = "";
+  for (; key[idx] == 0x20; idx++) {
+  }
+
+  // STAT
+  for (; key[idx] != 0x20; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.STAT = temp;
+  temp = "";
+  for (; !(key[idx] >= '0' && key[idx] <= '9'); idx++) {
+  }
+
+  // START
+  for (; key[idx] >= '0' && key[idx] <= '9' || key[idx] == ':'; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.START = temp;
+  temp = "";
+  for (; key[idx] == 0x20; idx++) {
+  }
+
+  // TIME
+  for (; key[idx] >= '0' && key[idx] <= '9' || key[idx] == ':'; idx++) {
+    temp += key[idx];
+  }
+  proc_temp.TIME = temp;
+  temp = "";
+  for (; key[idx] == 0x20; idx++) {
+  }
+
+  // COMMAND
+  for (; idx < key.size(); idx++) {
+    temp += key[idx];
+  }
+  proc_temp.COMMAND = temp;
+
+  // write to json file
+  write_process_t_json(proc_temp, json_info);
+}
+
+void write_process_t_json(const PROC_INFO &proc, json &json_info) {
+  json process_entry;
+  process_entry["USER"] = proc.USER;
+  process_entry["PID"] = proc.PID;
+  process_entry["%CPU"] = proc.CPU;
+  process_entry["%MEM"] = proc.MEM;
+  process_entry["VSZ"] = proc.VSZ;
+  process_entry["RSS"] = proc.RSS;
+  process_entry["TTY"] = proc.TTY;
+  process_entry["STAT"] = proc.STAT;
+  process_entry["START"] = proc.START;
+  process_entry["TIME"] = proc.TIME;
+  process_entry["COMMAND"] = proc.COMMAND;
+  json_info["processes"].push_back(process_entry);
 }
 
 int system_info(const std::ifstream &Boost_process_info_system,

@@ -40,7 +40,7 @@ int write_to_file(const std::string &str, const std::string &addr,
 int check_file_exist_delete(const std::string &file) {
 
   if (std::filesystem::exists(file)) {
-    std::cout << "Delete cached file: " << file << std::endl;
+    // std::cout << "Delete cached file: " << file << std::endl;
     std::error_code ec;                // 用于存储错误代码
     std::filesystem::remove(file, ec); // 删除文件
     if (ec) {
@@ -48,7 +48,7 @@ int check_file_exist_delete(const std::string &file) {
                 << std::endl;
       return -1;
     } else {
-      std::cout << "File deleted successfully." << std::endl;
+      // std::cout << "File deleted successfully." << std::endl;
     }
   }
 
