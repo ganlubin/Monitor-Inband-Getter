@@ -8,6 +8,7 @@ using json = nlohmann::json;
 
 int main() {
   boost_process("/home/sokee/Desktop/Monitor-Inband-Getter/src");
+  procps("/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.txt");
   create_info_json();
   return 0;
 }

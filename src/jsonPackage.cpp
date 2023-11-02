@@ -38,6 +38,8 @@ typedef struct proc {
   std::string COMMAND;
 } PROC_INFO;
 
+
+
 void readProcess(const std::string &, PROC_INFO &, json &);
 void write_process_t_json(const PROC_INFO &, json &);
 
@@ -100,6 +102,8 @@ int process_info(std::ifstream &Boost_process_info_process, json &json_info) {
   while (std::getline(Boost_process_info_process, key)) {
     size++;
   }
+
+  
 
   Boost_process_info_process.clear();                 // reset ifstream
   Boost_process_info_process.seekg(0, std::ios::beg); // reset ifstream
@@ -217,8 +221,10 @@ void readProcess(const std::string &key, PROC_INFO &proc_temp,
   }
   proc_temp.COMMAND = temp;
 
+
+
   // write to json file
-  write_process_t_json(proc_temp, json_info);
+  // write_process_t_json(proc_temp, json_info);
 }
 
 void write_process_t_json(const PROC_INFO &proc, json &json_info) {

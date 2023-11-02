@@ -5,7 +5,6 @@
 #include <string.h>
 #include <typeinfo>
 
-
 std::string create(const proc_t &);
 
 int procps(const std::string &file) {
@@ -47,11 +46,11 @@ std::string create(const proc_t &t) {
   res += "cutime: " + std::to_string(t.cutime) + '\n';
   res += "cstime: " + std::to_string(t.cstime) + '\n';
   res += "start_time: " + std::to_string(t.start_time) + '\n';
-  //   res + "signal: " + std::to_string(t.signal) + '\n';
-  //   res + "blocked: " + std::to_string(t.blocked) + '\n';
-  //   res + "sigignore: " + std::to_string(t.sigignore) + '\n';
-  //   res + "sigcatch: " + t.sigcatch + '\n';
-  //   res + "_sigpnd: " + t._sigpnd + '\n';
+  // res += "signal: " + (std::string)t.signal + '\n';
+  // res + "blocked: " + std::to_string(t.blocked) + '\n';
+  // res + "sigignore: " + std::to_string(t.sigignore) + '\n';
+  res + "sigcatch: " + t.sigcatch + '\n';
+  res + "_sigpnd: " + t._sigpnd + '\n';
   res += "start_code: " + std::to_string(t.start_code) + '\n';
   res += "end_code: " + std::to_string(t.end_code) + '\n';
   res += "start_stack: " + std::to_string(t.start_stack) + '\n';
@@ -98,7 +97,7 @@ std::string create(const proc_t &t) {
   //   res + "fgroup: " + t.fgroup + '\n';
   //   res + "cmd: " + std::to_string(t.cmd) + '\n';
   res += "cmd: ";
-  res.append(t.cmd), res + '\n';
+  res.append(t.cmd), res += '\n';
   res += "pgrp: " + std::to_string(t.pgrp) + '\n';
   res += "session: " + std::to_string(t.session) + '\n';
   res += "nlwp: " + std::to_string(t.nlwp) + '\n';
