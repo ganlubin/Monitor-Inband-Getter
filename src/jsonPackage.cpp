@@ -1,5 +1,7 @@
+#include "jsonPackage.hpp"
 #include "json.hpp"
 #include "tools.hpp"
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
@@ -7,7 +9,6 @@
 #include <sstream>
 #include <utility>
 #include <vector>
-#include <cmath>
 
 using json = nlohmann::json;
 
@@ -22,25 +23,9 @@ void system_tasks(json &, const std::pair<std::string, int> &);
 void system_cpus(json &, const std::pair<std::string, int> &);
 void system_memory(json &, const std::pair<std::string, int> &);
 void system_swap(json &, const std::pair<std::string, int> &);
-int process_info(std::ifstream &, json &);
+void process_info(std::ifstream &, std::ifstream &, json &);
 
-typedef struct proc {
-  std::string USER;
-  int PID;
-  float CPU;
-  float MEM;
-  int VSZ;
-  int RSS;
-  std::string TTY;
-  std::string STAT;
-  std::string START;
-  std::string TIME;
-  std::string COMMAND;
-} PROC_INFO;
-
-
-
-void readProcess(const std::string &, PROC_INFO &, json &);
+void readProcess_boost(const std::string &, PROC_INFO &);
 void write_process_t_json(const PROC_INFO &, json &);
 
 int create_info_json() {
@@ -77,11 +62,7 @@ int create_info_json() {
   }
 
   // process_info write
-  r = process_info(Boost_process_info_process, json_info);
-  if (!r) {
-    printError("Get process_info Error.");
-    return 0;
-  }
+  process_info(Boost_process_info_process, Procps, json_info);
 
   // output file
   r = output_json(json_info);
@@ -93,31 +74,67 @@ int create_info_json() {
   return 1;
 }
 
-int process_info(std::ifstream &Boost_process_info_process, json &json_info) {
+void process_info(std::ifstream &Boost_process_info_process,
+                  std::ifstream &Procps, json &json_info) {
 
-  std::string key = "";
-  std::ofstream outputFile("output.txt", std::ios_base::app);
-  std::getline(Boost_process_info_process, key);
-  int size = 0;
-  while (std::getline(Boost_process_info_process, key)) {
-    size++;
+  std::string key_boost = "";
+  std::getline(Boost_process_info_process, key_boost);
+
+  while (std::getline(Boost_process_info_process, key_boost)) {
+
+    PROC_INFO proc_temp;
+
+    // boost
+    readProcess_boost(key_boost, proc_temp);
+
+    // Procps
+    // readProcess_procps(Procps, proc_temp);
+
+    // write to json file
+    write_process_t_json(proc_temp, json_info);
   }
 
-  
+  // std::string key = "";
+  // std::getline(Boost_process_info_process, key);
 
-  Boost_process_info_process.clear();                 // reset ifstream
-  Boost_process_info_process.seekg(0, std::ios::beg); // reset ifstream
-
-  std::getline(Boost_process_info_process, key);
-  PROC_INFO proc_temp;
-  while (std::getline(Boost_process_info_process, key)) {
-    readProcess(key, proc_temp, json_info);
-  }
-  return 1;
+  // std::getline(Boost_process_info_process, key);
+  // PROC_INFO proc_temp;
+  // while (std::getline(Boost_process_info_process, key)) {
+  //   readProcess(key, proc_temp, proc_vector);
+  // }
 }
 
-void readProcess(const std::string &key, PROC_INFO &proc_temp,
-                 json &json_info) {
+void readProcess_procps(std::ifstream &Procps, PROC_INFO &proc_temp) {
+
+  std::string key = "";
+  
+  // tid check
+  std::getline(Procps, key);
+  if (key.substr(0, 3) != "tid") {
+    return;
+  }
+
+  // ppid
+  std::getline(Procps, key);
+  proc_temp.ppid = atoi(key.substr(6).c_str());
+
+  // maj_delta
+  std::getline(Procps, key);
+  proc_temp.maj_delta = std::stoul(key.substr(11).c_str());
+
+  // min_delta
+  std::getline(Procps, key);
+  proc_temp.min_delta = std::stoul(key.substr(11).c_str());
+
+  // pcpu
+  std::getline(Procps, key);
+  proc_temp.pcpu = static_cast<unsigned int>(std::stoul(key.substr(6).c_str()));
+
+  // 
+
+}
+
+void readProcess_boost(const std::string &key, PROC_INFO &proc_temp) {
   int idx = 0;
   std::string temp = "";
 
@@ -220,11 +237,6 @@ void readProcess(const std::string &key, PROC_INFO &proc_temp,
     temp += key[idx];
   }
   proc_temp.COMMAND = temp;
-
-
-
-  // write to json file
-  // write_process_t_json(proc_temp, json_info);
 }
 
 void write_process_t_json(const PROC_INFO &proc, json &json_info) {
