@@ -28,7 +28,6 @@ int procps(const std::string &file) {
     std::string s = create(proc_info);
     write_to_file(s + '\n', file, 'a');
   }
-  std::cout << "Over" << std::endl;
   closeproc(proc); // 关闭进程表
   return 0;
 }

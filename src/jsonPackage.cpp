@@ -27,6 +27,7 @@ void process_info(std::ifstream &, std::ifstream &, json &);
 
 void readProcess_boost(const std::string &, PROC_INFO &);
 void write_process_t_json(const PROC_INFO &, json &);
+void readProcess_procps(std::ifstream &, PROC_INFO &);
 
 int create_info_json() {
   // clear cached file
@@ -79,7 +80,6 @@ void process_info(std::ifstream &Boost_process_info_process,
 
   std::string key_boost = "";
   std::getline(Boost_process_info_process, key_boost);
-
   while (std::getline(Boost_process_info_process, key_boost)) {
 
     PROC_INFO proc_temp;
@@ -88,7 +88,7 @@ void process_info(std::ifstream &Boost_process_info_process,
     readProcess_boost(key_boost, proc_temp);
 
     // Procps
-    // readProcess_procps(Procps, proc_temp);
+    readProcess_procps(Procps, proc_temp);
 
     // write to json file
     write_process_t_json(proc_temp, json_info);
@@ -107,10 +107,10 @@ void process_info(std::ifstream &Boost_process_info_process,
 void readProcess_procps(std::ifstream &Procps, PROC_INFO &proc_temp) {
 
   std::string key = "";
-  
+
   // tid check
   std::getline(Procps, key);
-  if (key.substr(0, 3) != "tid") {
+  if (key.substr(0, 3) != "tid" || key.find_first_not_of(' ') == std::string::npos) {
     return;
   }
 
@@ -130,8 +130,251 @@ void readProcess_procps(std::ifstream &Procps, PROC_INFO &proc_temp) {
   std::getline(Procps, key);
   proc_temp.pcpu = static_cast<unsigned int>(std::stoul(key.substr(6).c_str()));
 
-  // 
+  // state
+  std::getline(Procps, key);
+  proc_temp.state = static_cast<char>(atoi(key.substr(7).c_str()));
 
+  // utime
+  std::getline(Procps, key);
+  proc_temp.utime = std::stoull(key.substr(7).c_str());
+
+  // stime
+  std::getline(Procps, key);
+  proc_temp.stime = std::stoull(key.substr(7).c_str());
+
+  // cutime
+  std::getline(Procps, key);
+  proc_temp.cutime = std::stoull(key.substr(8).c_str());
+
+  // cstime
+  std::getline(Procps, key);
+  proc_temp.cstime = std::stoull(key.substr(8).c_str());
+
+  // start_time
+  std::getline(Procps, key);
+  proc_temp.start_time = std::stoull(key.substr(12).c_str());
+
+  // start_code
+  std::getline(Procps, key);
+  proc_temp.start_code = std::stoul(key.substr(12).c_str());
+
+  // end_code
+  std::getline(Procps, key);
+  proc_temp.end_code = std::stoul(key.substr(10));
+
+  // start_stack
+  std::getline(Procps, key);
+  proc_temp.start_stack = std::stoul(key.substr(13));
+
+  // kstk_esp
+  std::getline(Procps, key);
+  proc_temp.kstk_esp = std::stoul(key.substr(10));
+
+  // kstk_eip
+  std::getline(Procps, key);
+  proc_temp.kstk_eip = std::stoul(key.substr(10));
+
+  // wchan
+  std::getline(Procps, key);
+  proc_temp.wchan = std::stoul(key.substr(7));
+
+  // priority
+  std::getline(Procps, key);
+  proc_temp.priority = std::atol(key.substr(10).c_str());
+
+  // nice
+  std::getline(Procps, key);
+  proc_temp.nice = std::atol(key.substr(6).c_str());
+
+  // rss
+  std::getline(Procps, key);
+  proc_temp.rss = std::atol(key.substr(5).c_str());
+
+  // alarm
+  std::getline(Procps, key);
+  proc_temp.alarm = std::atol(key.substr(7).c_str());
+
+  // size
+  std::getline(Procps, key);
+  proc_temp.size = std::atol(key.substr(6).c_str());
+
+  // resident
+  std::getline(Procps, key);
+  proc_temp.resident = std::atol(key.substr(10).c_str());
+
+  // share
+  std::getline(Procps, key);
+  proc_temp.share = std::atol(key.substr(7).c_str());
+
+  // trs
+  std::getline(Procps, key);
+  proc_temp.trs = std::atol(key.substr(5).c_str());
+
+  // lrs
+  std::getline(Procps, key);
+  proc_temp.lrs = std::atol(key.substr(5).c_str());
+
+  // drs
+  std::getline(Procps, key);
+  proc_temp.drs = std::atol(key.substr(5).c_str());
+
+  // dt
+  std::getline(Procps, key);
+  proc_temp.dt = std::atol(key.substr(4).c_str());
+
+  // vm_size
+  std::getline(Procps, key);
+  proc_temp.vm_size = std::stoul(key.substr(9));
+
+  // vm_lock
+  std::getline(Procps, key);
+  proc_temp.vm_lock = std::stoul(key.substr(9));
+
+  // vm_rss
+  std::getline(Procps, key);
+  proc_temp.vm_rss = std::stoul(key.substr(8));
+
+  // vm_rss_anon
+  std::getline(Procps, key);
+  proc_temp.vm_rss_anon = std::stoul(key.substr(13));
+
+  // vm_rss_shared
+  std::getline(Procps, key);
+  proc_temp.vm_rss_shared = std::stoul(key.substr(15));
+
+  // vm_data
+  std::getline(Procps, key);
+  proc_temp.vm_data = std::stoul(key.substr(9));
+
+  // vm_stack
+  std::getline(Procps, key);
+  proc_temp.vm_stack = std::stoul(key.substr(10));
+
+  // vm_swap
+  std::getline(Procps, key);
+  proc_temp.vm_swap = std::stoul(key.substr(9));
+
+  // vm_exe
+  std::getline(Procps, key);
+  proc_temp.vm_exe = std::stoul(key.substr(8));
+
+  // vm_lib
+  std::getline(Procps, key);
+  proc_temp.vm_lib = std::stoul(key.substr(8));
+
+  // rtprio
+  std::getline(Procps, key);
+  proc_temp.rtprio = std::stoul(key.substr(8));
+
+  // sched
+  std::getline(Procps, key);
+  proc_temp.sched = std::stoul(key.substr(7));
+
+  // vsize
+  std::getline(Procps, key);
+  proc_temp.vsize = std::stoul(key.substr(7));
+
+  // rss_rlim
+  std::getline(Procps, key);
+  proc_temp.rss_rlim = std::stoul(key.substr(10));
+
+  // flags
+  std::getline(Procps, key);
+  proc_temp.flags = std::stoul(key.substr(7));
+
+  // maj_flt
+  std::getline(Procps, key);
+  proc_temp.maj_flt = std::stoul(key.substr(9));
+
+  // min_flt
+  std::getline(Procps, key);
+  proc_temp.min_flt = std::stoul(key.substr(9));
+
+  // cmaj_flt
+  std::getline(Procps, key);
+  proc_temp.cmaj_flt = std::stoul(key.substr(10));
+
+  // cmin_flt
+  std::getline(Procps, key);
+  proc_temp.cmin_flt = std::stoul(key.substr(10));
+
+  // cmd
+  std::getline(Procps, key);
+  proc_temp.cmd = key.substr(5);
+
+  // pgrp
+  std::getline(Procps, key);
+  proc_temp.pgrp = std::atoi(key.substr(6).c_str());
+
+  // session
+  std::getline(Procps, key);
+  proc_temp.session = std::atoi(key.substr(9).c_str());
+
+  // nlwp
+  std::getline(Procps, key);
+  proc_temp.nlwp = std::atoi(key.substr(6).c_str());
+
+  // tgid
+  std::getline(Procps, key);
+  proc_temp.tgid = std::atoi(key.substr(6).c_str());
+
+  // tty
+  std::getline(Procps, key);
+  proc_temp.tty = std::atoi(key.substr(5).c_str());
+
+  // euid
+  std::getline(Procps, key);
+  proc_temp.euid = std::atoi(key.substr(6).c_str());
+
+  // egid
+  std::getline(Procps, key);
+  proc_temp.egid = std::atoi(key.substr(6).c_str());
+
+  // ruid
+  std::getline(Procps, key);
+  proc_temp.ruid = std::atoi(key.substr(6).c_str());
+
+  // rgid
+  std::getline(Procps, key);
+  proc_temp.rgid = std::atoi(key.substr(6).c_str());
+
+  // suid
+  std::getline(Procps, key);
+  proc_temp.suid = std::atoi(key.substr(6).c_str());
+
+  // sgid
+  std::getline(Procps, key);
+  proc_temp.sgid = std::atoi(key.substr(6).c_str());
+
+  // fuid
+  std::getline(Procps, key);
+  proc_temp.fuid = std::atoi(key.substr(6).c_str());
+
+  // fgid
+  std::getline(Procps, key);
+  proc_temp.fgid = std::atoi(key.substr(6).c_str());
+
+  // tpgid
+  std::getline(Procps, key);
+  proc_temp.tpgid = std::atoi(key.substr(7).c_str());
+
+  // exit_signal
+  std::getline(Procps, key);
+  proc_temp.exit_signal = std::atoi(key.substr(13).c_str());
+
+  // processor
+  std::getline(Procps, key);
+  proc_temp.processor = std::atoi(key.substr(11).c_str());
+
+  // oom_score
+  std::getline(Procps, key);
+  proc_temp.oom_socre = std::atoi(key.substr(11).c_str());
+
+  // oom_adj
+  std::getline(Procps, key);
+  proc_temp.oom_adj = std::atoi(key.substr(9).c_str());
+
+  std::getline(Procps, key);
 }
 
 void readProcess_boost(const std::string &key, PROC_INFO &proc_temp) {
@@ -252,6 +495,72 @@ void write_process_t_json(const PROC_INFO &proc, json &json_info) {
   process_entry["START"] = proc.START;
   process_entry["TIME"] = proc.TIME;
   process_entry["COMMAND"] = proc.COMMAND;
+  process_entry["ppid"] = proc.ppid;
+  process_entry["maj_delta"] = proc.maj_delta;
+  process_entry["min_delta"] = proc.min_delta;
+  process_entry["pcpu"] = proc.pcpu;
+  process_entry["state"] = proc.state;
+  process_entry["utime"] = proc.utime;
+  process_entry["stime"] = proc.stime;
+  process_entry["cutime"] = proc.cutime;
+  process_entry["cstime"] = proc.cstime;
+  process_entry["start_time"] = proc.start_time;
+  process_entry["start_code"] = proc.start_code;
+  process_entry["end_code"] = proc.end_code;
+  process_entry["start_stack"] = proc.start_stack;
+  process_entry["kstk_esp"] = proc.kstk_esp;
+  process_entry["kstk_eip"] = proc.kstk_eip;
+  process_entry["wchan"] = proc.wchan;
+  process_entry["priority"] = proc.priority;
+  process_entry["nice"] = proc.nice;
+  process_entry["rss"] = proc.rss;
+  process_entry["alarm"] = proc.alarm;
+  process_entry["size"] = proc.size;
+  process_entry["resident"] = proc.resident;
+  process_entry["share"] = proc.share;
+  process_entry["trs"] = proc.trs;
+  process_entry["lrs"] = proc.lrs;
+  process_entry["drs"] = proc.drs;
+  process_entry["dt"] = proc.dt;
+  process_entry["vm_size"] = proc.vm_size;
+  process_entry["vm_lock"] = proc.vm_lock;
+  process_entry["vm_rss"] = proc.rss;
+  process_entry["vm_rss_anon"] = proc.vm_rss_anon;
+  process_entry["vm_rss_shared"] = proc.vm_rss_shared;
+  process_entry["vm_data"] = proc.vm_data;
+  process_entry["vm_stack"] = proc.vm_stack;
+  process_entry["vm_swap"] = proc.vm_swap;
+  process_entry["vm_exe"] = proc.vm_exe;
+  process_entry["vm_lib"] = proc.vm_lib;
+  process_entry["rtprio"] = proc.rtprio;
+  process_entry["sched"] = proc.sched;
+  process_entry["vsize"] = proc.vsize;
+  process_entry["rss_rlim"] = proc.rss_rlim;
+  process_entry["flags"] = proc.flags;
+  process_entry["maj_flt"] = proc.maj_flt;
+  process_entry["min_flt"] = proc.min_flt;
+  process_entry["cmaj_flt"] = proc.cmaj_flt;
+  process_entry["cmin_flt"] = proc.cmin_flt;
+  process_entry["cmd"] = proc.cmd;
+  process_entry["pgrp"] = proc.pgrp;
+  process_entry["session"] = proc.session;
+  process_entry["nlwp"] = proc.nlwp;
+  process_entry["tgid"] = proc.tgid;
+  process_entry["tty"] = proc.tty;
+  process_entry["euid"] = proc.euid;
+  process_entry["egid"] = proc.egid;
+  process_entry["ruid"] = proc.ruid;
+  process_entry["rgid"] = proc.rgid;
+  process_entry["suid"] = proc.suid;
+  process_entry["sgid"] = proc.sgid;
+  process_entry["fuid"] = proc.fuid;
+  process_entry["fgid"] = proc.fgid;
+  process_entry["tpgid"] = proc.tpgid;
+  process_entry["exit_signal"] = proc.exit_signal;
+  process_entry["processor"] = proc.processor;
+  process_entry["oom_score"] = proc.oom_socre;
+  process_entry["oom_adj"] = proc.oom_adj;
+
   json_info["processes"].push_back(process_entry);
 }
 
