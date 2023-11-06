@@ -31,11 +31,17 @@ void readProcess_procps(std::ifstream &, PROC_INFO &);
 
 int create_info_json() {
   // clear cached file
-  check_file_exist_delete("resources.json");
+  check_file_exist_delete(
+      "/home/sokee/Desktop/Monitor-Inband-Getter/src/resources.json");
 
-  std::ifstream Boost_process_info_process("Boost_process_info_process.txt");
-  std::ifstream Boost_process_info_system("Boost_process_info_system.txt");
-  std::ifstream Procps("Procps.txt");
+  std::ifstream Boost_process_info_process(
+      "/home/sokee/Desktop/Monitor-Inband-Getter/src/"
+      "Boost_process_info_process.txt");
+  std::ifstream Boost_process_info_system(
+      "/home/sokee/Desktop/Monitor-Inband-Getter/src/"
+      "Boost_process_info_system.txt");
+  std::ifstream Procps(
+      "/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.txt");
 
   if (!Boost_process_info_process) {
     printError("Miss file: Boost_process_info_process.txt");
@@ -110,7 +116,8 @@ void readProcess_procps(std::ifstream &Procps, PROC_INFO &proc_temp) {
 
   // tid check
   std::getline(Procps, key);
-  if (key.substr(0, 3) != "tid" || key.find_first_not_of(' ') == std::string::npos) {
+  if (key.substr(0, 3) != "tid" ||
+      key.find_first_not_of(' ') == std::string::npos) {
     return;
   }
 
