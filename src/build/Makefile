@@ -153,6 +153,54 @@ Boost_process.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Boost_process.cpp.s
 .PHONY : Boost_process.cpp.s
 
+Diskinfo_Getter.o: Diskinfo_Getter.cpp.o
+.PHONY : Diskinfo_Getter.o
+
+# target to build an object file
+Diskinfo_Getter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Diskinfo_Getter.cpp.o
+.PHONY : Diskinfo_Getter.cpp.o
+
+Diskinfo_Getter.i: Diskinfo_Getter.cpp.i
+.PHONY : Diskinfo_Getter.i
+
+# target to preprocess a source file
+Diskinfo_Getter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Diskinfo_Getter.cpp.i
+.PHONY : Diskinfo_Getter.cpp.i
+
+Diskinfo_Getter.s: Diskinfo_Getter.cpp.s
+.PHONY : Diskinfo_Getter.s
+
+# target to generate assembly for a file
+Diskinfo_Getter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Diskinfo_Getter.cpp.s
+.PHONY : Diskinfo_Getter.cpp.s
+
+Meminfo_Getter.o: Meminfo_Getter.cpp.o
+.PHONY : Meminfo_Getter.o
+
+# target to build an object file
+Meminfo_Getter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Meminfo_Getter.cpp.o
+.PHONY : Meminfo_Getter.cpp.o
+
+Meminfo_Getter.i: Meminfo_Getter.cpp.i
+.PHONY : Meminfo_Getter.i
+
+# target to preprocess a source file
+Meminfo_Getter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Meminfo_Getter.cpp.i
+.PHONY : Meminfo_Getter.cpp.i
+
+Meminfo_Getter.s: Meminfo_Getter.cpp.s
+.PHONY : Meminfo_Getter.s
+
+# target to generate assembly for a file
+Meminfo_Getter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Meminfo_Getter.cpp.s
+.PHONY : Meminfo_Getter.cpp.s
+
 Procps.o: Procps.cpp.o
 .PHONY : Procps.o
 
@@ -261,6 +309,12 @@ help:
 	@echo "... Boost_process.o"
 	@echo "... Boost_process.i"
 	@echo "... Boost_process.s"
+	@echo "... Diskinfo_Getter.o"
+	@echo "... Diskinfo_Getter.i"
+	@echo "... Diskinfo_Getter.s"
+	@echo "... Meminfo_Getter.o"
+	@echo "... Meminfo_Getter.i"
+	@echo "... Meminfo_Getter.s"
 	@echo "... Procps.o"
 	@echo "... Procps.i"
 	@echo "... Procps.s"

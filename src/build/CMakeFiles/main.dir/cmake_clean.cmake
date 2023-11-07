@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/Boost_process.cpp.o"
   "CMakeFiles/main.dir/Boost_process.cpp.o.d"
+  "CMakeFiles/main.dir/Diskinfo_Getter.cpp.o"
+  "CMakeFiles/main.dir/Diskinfo_Getter.cpp.o.d"
+  "CMakeFiles/main.dir/Meminfo_Getter.cpp.o"
+  "CMakeFiles/main.dir/Meminfo_Getter.cpp.o.d"
   "CMakeFiles/main.dir/Procps.cpp.o"
   "CMakeFiles/main.dir/Procps.cpp.o.d"
   "CMakeFiles/main.dir/jsonPackage.cpp.o"

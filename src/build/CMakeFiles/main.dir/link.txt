@@ -1,1 +1,1 @@
-/usr/bin/c++  -O3 CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/tools.cpp.o CMakeFiles/main.dir/jsonPackage.cpp.o CMakeFiles/main.dir/Procps.cpp.o CMakeFiles/main.dir/Boost_process.cpp.o -o main  /usr/lib/x86_64-linux-gnu/libprocps.so 
+/usr/bin/c++  -O3 CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/tools.cpp.o CMakeFiles/main.dir/jsonPackage.cpp.o CMakeFiles/main.dir/Procps.cpp.o CMakeFiles/main.dir/Boost_process.cpp.o CMakeFiles/main.dir/Meminfo_Getter.cpp.o CMakeFiles/main.dir/Diskinfo_Getter.cpp.o -o main  /usr/lib/x86_64-linux-gnu/libprocps.so 

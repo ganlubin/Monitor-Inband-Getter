@@ -1,25 +1,4 @@
-- Monitor-Inband-Getter
-  - src
-    - .vscode
-      - settings.json
-    - Boost_process_info_process.txt
-    - Boost_process_info_system.txt
-    - Boost_process.cpp
-    - Boost_process.hpp
-    - CMakeLists.txt
-    - json.hpp
-    - jsonPackage.cpp
-    - jsonPackage.hpp
-    - main.cpp
-    - path.md
-    - Procps.cpp
-    - Procps.hpp
-    - Procps.txt
-    - test.cpp
-    - tools.cpp
-    - tools.hpp
-    - TopExplaination.txt
-  - README.md
+
 
   g++ -o main main.cpp tools.cpp jsonPackage.cpp Procps.cpp Boost_process.cpp -lprocps
 
@@ -52,6 +31,8 @@
     - tools.cpp
     - tools.hpp
     - TopExplaination.txt
+    - Meminfo_Getter.hpp
+    - Meminfo_Getter.cpp
   - README.md
 ```
 编译命令是：

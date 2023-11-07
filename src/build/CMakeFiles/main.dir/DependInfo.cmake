@@ -9,6 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/sokee/Desktop/Monitor-Inband-Getter/src/Boost_process.cpp" "CMakeFiles/main.dir/Boost_process.cpp.o" "gcc" "CMakeFiles/main.dir/Boost_process.cpp.o.d"
+  "/home/sokee/Desktop/Monitor-Inband-Getter/src/Diskinfo_Getter.cpp" "CMakeFiles/main.dir/Diskinfo_Getter.cpp.o" "gcc" "CMakeFiles/main.dir/Diskinfo_Getter.cpp.o.d"
+  "/home/sokee/Desktop/Monitor-Inband-Getter/src/Meminfo_Getter.cpp" "CMakeFiles/main.dir/Meminfo_Getter.cpp.o" "gcc" "CMakeFiles/main.dir/Meminfo_Getter.cpp.o.d"
   "/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.cpp" "CMakeFiles/main.dir/Procps.cpp.o" "gcc" "CMakeFiles/main.dir/Procps.cpp.o.d"
   "/home/sokee/Desktop/Monitor-Inband-Getter/src/jsonPackage.cpp" "CMakeFiles/main.dir/jsonPackage.cpp.o" "gcc" "CMakeFiles/main.dir/jsonPackage.cpp.o.d"
   "/home/sokee/Desktop/Monitor-Inband-Getter/src/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"

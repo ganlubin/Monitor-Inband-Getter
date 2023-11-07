@@ -1,6 +1,7 @@
-CMakeFiles/main.dir/main.cpp.o: \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/main.cpp \
+CMakeFiles/main.dir/Meminfo_Getter.cpp.o: \
+ /home/sokee/Desktop/Monitor-Inband-Getter/src/Meminfo_Getter.cpp \
  /usr/include/stdc-predef.h \
+ /home/sokee/Desktop/Monitor-Inband-Getter/src/Meminfo_Getter.hpp \
  /home/sokee/Desktop/Monitor-Inband-Getter/src/json.hpp \
  /usr/include/c++/11/algorithm /usr/include/c++/11/utility \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -229,14 +230,8 @@ CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc /usr/include/c++/11/ostream \
  /usr/include/c++/11/bits/ostream.tcc \
- /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/iostream \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/Boost_process.hpp \
- /usr/include/boost/process.hpp \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.hpp \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/tools.hpp \
- /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
+ /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/fstream \
+ /usr/include/c++/11/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
- /usr/include/c++/11/bits/fstream.tcc \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/jsonPackage.hpp \
- /home/sokee/Desktop/Monitor-Inband-Getter/src/Meminfo_Getter.hpp
+ /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/iostream

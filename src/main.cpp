@@ -5,8 +5,13 @@ using json = nlohmann::json;
 #include "Procps.hpp"
 #include "tools.hpp"
 #include "jsonPackage.hpp"
+#include "Meminfo_Getter.hpp"
+#include <fstream>
 
 int main() {
+  json meminfo = meminfo_getter();
+  std::ofstream output("meminfo.json");
+  output << meminfo;
   boost_process("/home/sokee/Desktop/Monitor-Inband-Getter/src");
   procps("/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.txt");
   create_info_json();

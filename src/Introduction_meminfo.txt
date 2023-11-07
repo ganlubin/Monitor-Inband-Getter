@@ -1,0 +1,85 @@
+MemTotal: 总的物理内存量为 1998592 kB。
+MemFree: 当前未被使用的内存总量为 1639488 kB。
+MemAvailable: 估计的当前可用的内存总量为 1743632 kB。
+Buffers: 用于缓冲的内存量为 18704 kB。
+Cached: 用于缓存的内存量为 95936 kB。
+SwapCached: 从交换空间交换回的内存量为 0 kB。
+Active: 当前活跃的内存总量为 133456 kB。
+Inactive: 当前不活跃的内存总量为 72736 kB。
+Active(anon): 匿名内存的活跃部分为 94688 kB，用于进程分配但没有关联的数据。
+Inactive(anon): 匿名内存的非活跃部分为 8352 kB，用于进程分配但没有关联的数据。
+Active(file): 文件缓存的活跃部分为 38768 kB，包括从文件系统缓存的数据。
+Inactive(file): 文件缓存的非活跃部分为 64384 kB，包括从文件系统缓存的数据。
+Unevictable: 无法被换出的内存总量为 0 kB，这些内存页被锁定并且不能被置换到交换空间。
+Mlocked: 通过调用mlock()锁定的内存总量为 0 kB。
+SwapTotal: 交换空间的总量为 0 kB。
+SwapFree: 当前未被使用的交换空间总量为 0 kB。
+Dirty: 已被修改但尚未被写入到磁盘的页面总量为 0 kB。
+Writeback: 正在被写回到磁盘的页面总量为 0 kB。
+AnonPages: 匿名页的总数为 91568 kB，包括进程堆栈和堆的内存。
+Mapped: 设备映射的页的总数为 48544 kB，包括映射到进程地址空间的文件页。
+Shmem: 共享内存的总量为 11488 kB，包括 System V 共享内存段和内存映射文件。
+KReclaimable: 可回收的内存总量为 25664 kB。
+Slab: 内核数据结构缓存的总量为 82480 kB。
+SReclaimable: 可回收的Slab对象的总量为 25664 kB。
+SUnreclaim: 不可回收的Slab对象的总量为 56816 kB。
+KernelStack: 内核栈的总量为 2784 kB。
+PageTables: 页表的总量为 8640 kB。
+NFS_Unstable: 不稳定的NFS页的总量为 0 kB。
+Bounce: 用于内存回弹缓冲区的总量为 0 kB。
+WritebackTmp: 用于临时写回的总量为 0 kB。
+CommitLimit: 可分配的总内存量为 999296 kB。
+Committed_AS: 估计的已经分配的内存总量为 265408 kB。
+VmallocTotal: 虚拟内存的总量为 536838111 kB。
+VmallocUsed: 已使用的虚拟内存总量为 2912 kB。
+VmallocChunk: 最大的单个虚拟内存块的总量为 0 kB。
+Percpu: 每个CPU的内存量为 560 kB。
+HugePages_Total: 总的大页面数量为 0。
+HugePages_Free: 空闲的大页面数量为 0。
+HugePages_Rsvd: 保留的大页面数量为 0。
+HugePages_Surp: 多余的大页面数量为 0。
+Hugepagesize: 大页面的大小为 32768 kB。
+Hugetlb: 用于大页面的总内存量为 0 kB。
+
+MemTotal:        1998592 kB
+MemFree:         1639488 kB
+MemAvailable:    1743632 kB
+Buffers:           18704 kB
+Cached:            95936 kB
+SwapCached:            0 kB
+Active:           133456 kB
+Inactive:          72736 kB
+Active(anon):      94688 kB
+Inactive(anon):     8352 kB
+Active(file):      38768 kB
+Inactive(file):    64384 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                 0 kB
+Writeback:             0 kB
+AnonPages:         91568 kB
+Mapped:            48544 kB
+Shmem:             11488 kB
+KReclaimable:      25664 kB
+Slab:              82480 kB
+SReclaimable:      25664 kB
+SUnreclaim:        56816 kB
+KernelStack:        2784 kB
+PageTables:         8640 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:      999296 kB
+Committed_AS:     265408 kB
+VmallocTotal:   536838111 kB
+VmallocUsed:        2912 kB
+VmallocChunk:          0 kB
+Percpu:              560 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:      32768 kB
+Hugetlb:               0 kB

@@ -12,4 +12,6 @@ int check_file_exist_delete(const std::string &file);
 
 void printError(const std::string &error);
 
+
+
 #endif
