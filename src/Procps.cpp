@@ -11,10 +11,6 @@ int procps(const std::string &file) {
 
   // check if cached file existed
   int r = check_file_exist_delete(file);
-  if (r < 0) {
-    std::cerr << "something wrong in the deleting..." << std::endl;
-    return -1;
-  }
 
   PROCTAB *proc = openproc(PROC_FILLMEM | PROC_FILLSTAT);
 
@@ -28,7 +24,7 @@ int procps(const std::string &file) {
     std::string s = create(proc_info);
     write_to_file(s + '\n', file, 'a');
   }
-  closeproc(proc); // 关闭进程表
+  closeproc(proc); // close processes table
   return 0;
 }
 

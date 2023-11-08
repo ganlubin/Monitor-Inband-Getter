@@ -23,8 +23,7 @@ typedef struct proc {
   unsigned int pcpu;
   char state;
   unsigned long long utime, stime, cutime, cstime, start_time;
-  unsigned long start_code, end_code, start_stack, kstk_esp,
-      kstk_eip;
+  unsigned long start_code, end_code, start_stack, kstk_esp, kstk_eip;
   unsigned long wchan;
   long priority, nice, rss, alarm;
   long size, resident, share, trs, lrs, drs, dt;
@@ -39,6 +38,6 @@ typedef struct proc {
 
 } PROC_INFO;
 
-int create_info_json();
+nlohmann::json create_info_json(const std::string &, const std::string &);
 
 #endif

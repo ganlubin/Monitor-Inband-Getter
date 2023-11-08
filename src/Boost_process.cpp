@@ -11,15 +11,7 @@ int boost_process(const std::string &addr) {
 
   // check if files exist
   int r = check_file_exist_delete(process_addr);
-  if (r < 0) {
-    std::cerr << "something wrong in the deleting..." << std::endl;
-    return -1;
-  }
   r = check_file_exist_delete(system_addr);
-  if (r < 0) {
-    std::cerr << "something wrong in the deleting..." << std::endl;
-    return -1;
-  }
 
   // system'info
   bp::ipstream system_info_stream;
@@ -29,7 +21,6 @@ int boost_process(const std::string &addr) {
          !system_info.empty()) {
     write_to_file(system_info + '\n', system_addr, 'a');
   }
-  // std::cout << "write successfully" << '\n';
 
   // processes'info
   bp::ipstream process_info_stream;
@@ -39,7 +30,6 @@ int boost_process(const std::string &addr) {
          !process_info.empty()) {
     write_to_file(process_info + '\n', process_addr, 'a');
   }
-  // std::cout << "write successfully" << '\n';
 
   return 0;
 }

@@ -29,19 +29,15 @@ void readProcess_boost(const std::string &, PROC_INFO &);
 void write_process_t_json(const PROC_INFO &, json &);
 void readProcess_procps(std::ifstream &, PROC_INFO &);
 
-int create_info_json() {
-  // clear cached file
-  check_file_exist_delete(
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src/resources.json");
+nlohmann::json create_info_json(const std::string &boost_addr, const std::string &procps_addr) {
 
-  std::ifstream Boost_process_info_process(
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src/"
-      "Boost_process_info_process.txt");
-  std::ifstream Boost_process_info_system(
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src/"
-      "Boost_process_info_system.txt");
-  std::ifstream Procps(
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.txt");
+  std::string boost_process_addr = boost_addr + "/Boost_process_info_process.txt";
+  std::string boost_system_addr = boost_addr + "/Boost_process_info_system.txt";
+
+
+  std::ifstream Boost_process_info_process(boost_process_addr);
+  std::ifstream Boost_process_info_system(boost_system_addr);
+  std::ifstream Procps(procps_addr);
 
   if (!Boost_process_info_process) {
     printError("Miss file: Boost_process_info_process.txt");
@@ -65,20 +61,13 @@ int create_info_json() {
   int r = system_info(Boost_process_info_system, json_info);
   if (!r) {
     printError("Get system_info Error.");
-    return 0;
   }
 
   // process_info write
   process_info(Boost_process_info_process, Procps, json_info);
 
-  // output file
-  r = output_json(json_info);
-  if (!r) {
-    printError("output json file failed.\n");
-    return 0;
-  }
+  return json_info.dump();
 
-  return 1;
 }
 
 void process_info(std::ifstream &Boost_process_info_process,
@@ -96,7 +85,7 @@ void process_info(std::ifstream &Boost_process_info_process,
     // Procps
     readProcess_procps(Procps, proc_temp);
 
-    // write to json file
+    // write to json
     write_process_t_json(proc_temp, json_info);
   }
 
