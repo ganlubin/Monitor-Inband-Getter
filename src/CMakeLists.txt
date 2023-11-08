@@ -1,31 +1,43 @@
-cmake_minimum_required(VERSION 3.10)
-project(Monitor-Inband-Getter VERSION 1.0)
+cmake_minimum_required(VERSION 3.0)
+project(Monitor-Inband-Getter)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# 设置编译选项
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build)
+# 设置编译输出目录
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 
-set(SOURCES
-    main.cpp
-    tools.cpp
+# 添加头文件搜索路径
+include_directories(${CMAKE_SOURCE_DIR})
+
+# 将其他文件编译为静态库
+add_library(my_lib STATIC
+    Boost_process.cpp
+    Info_Sender.cpp
     jsonPackage.cpp
     Procps.cpp
-    Boost_process.cpp
-    Meminfo_Getter.cpp 
-    Diskinfo_Getter.cpp 
+    tools.cpp
+    Meminfo_Getter.cpp
+    Diskinfo_Getter.cpp
 )
 
-add_executable(main ${SOURCES})
+# 添加可执行文件main
+add_executable(main_executable
+    main.cpp
+)
 
-target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/src)
+# 添加可执行文件Info_Receiver
+add_executable(info_receiver_executable
+    Info_Receiver.cpp
+)
 
-find_library(PROCPS_LIBRARY NAMES procps)
-if(NOT PROCPS_LIBRARY)
-    message(FATAL_ERROR "procps library not found")
-endif()
+# 链接静态库
+target_link_libraries(main_executable my_lib)
+target_link_libraries(info_receiver_executable my_lib)
 
-target_link_libraries(main PRIVATE ${PROCPS_LIBRARY})
+target_link_libraries(main_executable procps z)
+target_link_libraries(info_receiver_executable procps z)
