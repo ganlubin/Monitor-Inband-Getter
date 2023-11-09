@@ -21,12 +21,12 @@ int main() {
   // get boost_process include system and processes, create files:
   // Boost_process_info_process.txt and Boost_process_info_system.txt
   std::string boost_addr =
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src"; /* plz write addr here */
+      "/home/Monitor-Inband-Getter/src"; /* plz write addr here */
   boost_process(boost_addr);
 
   // get Procps.txt: describe processes' details
   std::string procps_addr =
-      "/home/sokee/Desktop/Monitor-Inband-Getter/src/Procps.txt";
+      "/home/Monitor-Inband-Getter/src/Procps.txt";
   procps(procps_addr);
 
   // json
@@ -43,7 +43,7 @@ void sendInfo(const std::string &meminfo_str, const std::string &process_json) {
 
     send_To_BMC(meminfo_str, "127.0.0.1", 12345);
     sleep(3);
-    
+
     send_To_BMC(process_json, "127.0.0.1", 12345);
 
     sleep(10);

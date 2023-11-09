@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -rdynamic CMakeFiles/info_receiver_executable.dir/Info_Receiver.cpp.o -o info_receiver_executable  libmy_lib.a -lprocps -lz 
