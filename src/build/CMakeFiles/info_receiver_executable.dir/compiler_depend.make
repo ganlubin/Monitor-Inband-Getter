@@ -238,7 +238,8 @@ CMakeFiles/info_receiver_executable.dir/Info_Receiver.cpp.o: ../Info_Receiver.cp
   /usr/include/c++/11/bits/stl_uninitialized.h \
   /usr/include/c++/11/bits/stl_vector.h \
   /usr/include/c++/11/bits/stl_bvector.h \
-  /usr/include/c++/11/bits/vector.tcc
+  /usr/include/c++/11/bits/vector.tcc \
+  ../Info_Sender.hpp
 
 
 /usr/include/c++/11/bits/stl_uninitialized.h:
@@ -276,6 +277,8 @@ CMakeFiles/info_receiver_executable.dir/Info_Receiver.cpp.o: ../Info_Receiver.cp
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd.h:
+
+../Info_Sender.hpp:
 
 /usr/include/c++/11/vector:
 

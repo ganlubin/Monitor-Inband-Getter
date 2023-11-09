@@ -6,18 +6,21 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <vector>
-
+#include "Info_Sender.hpp"
+#include <sys/socket.h>
+#include <arpa/inet.h>
 
 int main(int argc, char *argv[]) {
   //   std::cout << "Number of arguments: " << argc << std::endl;
 
   std::string hostname = argv[1];
-  int port = std::atoi(argv[2]);
+  int port_int = std::atoi(argv[2]);
+  unsigned int port = static_cast<uint16_t>(port_int);
 
   struct sockaddr_in serverAddr;
   serverAddr.sin_family = AF_INET;
-  serverAddr.sin_port = port;
-  serverAddr.sin_addr.s_addr = std::atoi(hostname.c_str());
+  serverAddr.sin_port = htons(port);
+  serverAddr.sin_addr.s_addr = inet_addr(hostname.c_str());
 
   int sock = socket(AF_INET, SOCK_DGRAM, 0);
   if (sock == -1) {
@@ -31,34 +34,39 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  const int bufferSize = 65536 << 1; // 64 << 1 KB buffer
+  const int bufferSize = 65536 << 3; // (64 << 1) KB buffer
   std::vector<Bytef> receiveBuffer(bufferSize);
 
-  ssize_t receivedBytes = recv(sock, receiveBuffer.data(), bufferSize, 0);
-  if (receivedBytes == -1) {
-    std::cerr << "Failed to receive data" << std::endl;
-    close(sock);
-    return 1;
-  }
-  std::cout << "Received compressed data length: " << receivedBytes << " bytes"
-            << std::endl;
-
-  unsigned long destLen = bufferSize;
-  std::vector<Bytef> decompressedData(bufferSize);
-  int uncompressResult = uncompress(decompressedData.data(), &destLen,
-                                    receiveBuffer.data(), receivedBytes);
-  if (uncompressResult != Z_OK) {
-    std::cerr << "Decompression failed with error code: " << uncompressResult
+  while (true) {
+    ssize_t receivedBytes = recv(sock, receiveBuffer.data(), bufferSize, 0);
+    if (receivedBytes == -1) {
+      std::cerr << "Failed to receive data" << std::endl;
+      continue; // continue listening for new data
+    }
+    std::cout << "Received compressed data length: " << receivedBytes << " bytes"
               << std::endl;
-    close(sock);
-    return 1;
+
+    unsigned long destLen = bufferSize;
+    std::vector<Bytef> decompressedData(bufferSize);
+    int uncompressResult = uncompress(decompressedData.data(), &destLen,
+                                      receiveBuffer.data(), receivedBytes);
+    if (uncompressResult != Z_OK) {
+      std::cerr << "Decompression failed with error code: " << uncompressResult
+                << std::endl;
+      continue; // continue listening for new data
+    }
+
+    std::string json_str(reinterpret_cast<char *>(decompressedData.data()),
+                         destLen);
+
+    std::size_t sizeInBytes = json_str.size();
+    std::cout << "Depressed data length: " << sizeInBytes << std::endl;
+
+    // Process the received data here
+
   }
 
-  std::string json_str(reinterpret_cast<char *>(decompressedData.data()),
-                       destLen);
-
-  std::size_t sizeInBytes = json_str.size();
-  std::cout << sizeInBytes << std::endl;
+  close(sock); // Close the socket when the loop is terminated
 
   return 0;
 }

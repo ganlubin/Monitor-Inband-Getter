@@ -22,10 +22,11 @@ int send_To_BMC(const std::string &str, const std::string &__hostname,
     return -1;
   }
 
+  std::cout << "Uncompressed datalen: " << sourceLen << std::endl;
   std::cout << "Compressed datalen: " << destLen << std::endl;
 
   int r = sendZlibByUDP(compressedData, destLen,
-                        convertIPv4ToUint32(__hostname), port);
+                        INADDR_LOOPBACK, port);
 
   if (!r) {
     printError("Transport failed!");
@@ -62,14 +63,4 @@ bool sendZlibByUDP(std::vector<Bytef> compressedData, uLong destLen,
 
   close(sock);
   return 1;
-}
-
-uint32_t convertIPv4ToUint32(const std::string &ipAddress) {
-  struct in_addr addr;
-  if (inet_pton(AF_INET, ipAddress.c_str(), &addr) != 1) {
-    // 处理转换错误的情况
-    std::cerr << "Invalid IP address format" << std::endl;
-    return 0; // 或者抛出异常，具体取决于您的需求
-  }
-  return addr.s_addr;
 }

@@ -43,6 +43,7 @@ void sendInfo(const std::string &meminfo_str, const std::string &process_json) {
 
     send_To_BMC(meminfo_str, "127.0.0.1", 12345);
     sleep(3);
+    
     send_To_BMC(process_json, "127.0.0.1", 12345);
 
     sleep(10);
