@@ -41,3 +41,6 @@ target_link_libraries(info_receiver_executable my_lib)
 
 target_link_libraries(main_executable procps z)
 target_link_libraries(info_receiver_executable procps z)
+
+install(TARGETS main_executable DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS info_receiver_executable DESTINATION ${CMAKE_INSTALL_BINDIR})
