@@ -1,9 +1,0 @@
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/my_lib.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/main_executable.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/info_receiver_executable.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/edit_cache.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/rebuild_cache.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/list_install_components.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/install.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/install/local.dir
-/home/sokee/workspace/Monitor-Inband-Getter/src/build/CMakeFiles/install/strip.dir

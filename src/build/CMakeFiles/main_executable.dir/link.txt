@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -rdynamic CMakeFiles/main_executable.dir/main.cpp.o -o main_executable  libmy_lib.a -lprocps -lz 
