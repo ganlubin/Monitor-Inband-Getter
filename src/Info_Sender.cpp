@@ -7,7 +7,7 @@
 #include <vector>
 #include <zlib.h>
 
-bool sendZlibByUDP(std::vector<Bytef>, uLong, uint32_t, unsigned int);
+bool sendZlibByUDP(std::vector<Bytef>, uLong, const std::string &, unsigned int);
 uint32_t convertIPv4ToUint32(const std::string &);
 
 int send_To_BMC(const std::string &str, const std::string &__hostname,
@@ -26,7 +26,7 @@ int send_To_BMC(const std::string &str, const std::string &__hostname,
   std::cout << "Compressed datalen: " << destLen << std::endl;
 
   int r = sendZlibByUDP(compressedData, destLen,
-                        INADDR_LOOPBACK, port);
+                        __hostname, port);
 
   if (!r) {
     printError("Transport failed!");
@@ -37,12 +37,12 @@ int send_To_BMC(const std::string &str, const std::string &__hostname,
 }
 
 bool sendZlibByUDP(std::vector<Bytef> compressedData, uLong destLen,
-                   uint32_t __hostlong, unsigned int port) {
+                   const std::string &hostname, unsigned int port) {
   // 设置接收端地址和端口号
   struct sockaddr_in serverAddr;
   serverAddr.sin_family = AF_INET;
   serverAddr.sin_port = htons(port);
-  serverAddr.sin_addr.s_addr = htonl(__hostlong);
+  serverAddr.sin_addr.s_addr = inet_addr(hostname.c_str());
 
   // 创建 UDP 套接字
   int sock = socket(AF_INET, SOCK_DGRAM, 0);

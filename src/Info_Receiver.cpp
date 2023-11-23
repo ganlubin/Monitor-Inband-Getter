@@ -14,8 +14,8 @@ int main(int argc, char *argv[]) {
   //   std::cout << "Number of arguments: " << argc << std::endl;
 
   std::string hostname = argv[1];
-  int port_int = std::atoi(argv[2]);
-  unsigned int port = static_cast<uint16_t>(port_int);
+
+  uint16_t port = std::stoi(argv[2]);
 
   struct sockaddr_in serverAddr;
   serverAddr.sin_family = AF_INET;
@@ -61,6 +61,8 @@ int main(int argc, char *argv[]) {
 
     std::size_t sizeInBytes = json_str.size();
     std::cout << "Depressed data length: " << sizeInBytes << std::endl;
+
+    std::cout << json_str << std::endl;
 
     // Process the received data here
 

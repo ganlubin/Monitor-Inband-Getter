@@ -10,42 +10,48 @@ using json = nlohmann::json;
 #include <fstream>
 #include <unistd.h>
 
-void sendInfo(const std::string &, const std::string &);
+#define LOCAL "127.0.0.1"
+#define BMC_IP0 "192.168.0.134"
+#define BMC_IP1 "192.168.1.134"
+#define TEST_PORT 12345
 
-int main() {
+void sendInfo(const std::string &, const std::string &, const std::string &, const int&);
 
-  // return /proc/meminfo json
-  json meminfo = meminfo_getter();
-  std::string meminfo_str = meminfo.dump();
+int main(int argc, char *argv[]) {
 
-  // get boost_process include system and processes, create files:
-  // Boost_process_info_process.txt and Boost_process_info_system.txt
-  std::string boost_addr =
-      "/home/Monitor-Inband-Getter/src"; /* plz write addr here */
-  boost_process(boost_addr);
+  std::string hostname = argv[1];
 
-  // get Procps.txt: describe processes' details
-  std::string procps_addr =
-      "/home/Monitor-Inband-Getter/src/Procps.txt";
-  procps(procps_addr);
+  uint16_t port = std::stoi(argv[2]);
+  while (1) {
+    // return /proc/meminfo json
+    json meminfo = meminfo_getter();
+    std::string meminfo_str = meminfo.dump();
 
-  // json
-  std::string process_json = create_info_json(boost_addr, procps_addr);
+    // get boost_process include system and processes, create files:
+    // Boost_process_info_process.txt and Boost_process_info_system.txt
+    std::string boost_addr =
+        "/home/sokee/workspace/Monitor-Inband-Getter/src"; /* plz write addr here */
+    boost_process(boost_addr);
 
-  sendInfo(meminfo_str, process_json);
+    // get Procps.txt: describe processes' details
+    std::string procps_addr =
+        "/home/sokee/workspace/Monitor-Inband-Getter/src/Procps.txt";
+    procps(procps_addr);
 
+    // json
+    std::string process_json = create_info_json(boost_addr, procps_addr);
+
+    sendInfo(meminfo_str, process_json, hostname, port);
+    sleep(10);
+  }
   return 0;
 }
 
 // send the info
-void sendInfo(const std::string &meminfo_str, const std::string &process_json) {
-  while (1) {
+void sendInfo(const std::string &meminfo_str, const std::string &process_json, const std::string &hostname, const int &port) {
 
-    send_To_BMC(meminfo_str, "127.0.0.1", 12345);
-    sleep(3);
-
-    send_To_BMC(process_json, "127.0.0.1", 12345);
-
-    sleep(10);
-  }
+  send_To_BMC(meminfo_str, hostname, port);
+  sleep(3);
+  send_To_BMC(process_json, hostname, port);
+  
 }
