@@ -1,14 +1,14 @@
 #include "Info_Receiver.hpp"
-#include "tools.hpp"
-
-#include "tools.hpp"
 #include <iostream>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <vector>
-#include "Info_Sender.hpp"
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <zlib.h>
+#define RESET "\033[0m"
+#define RED "\033[31m"
+void printError(const std::string &);
 
 int main(int argc, char *argv[]) {
   //   std::cout << "Number of arguments: " << argc << std::endl;
@@ -20,8 +20,16 @@ int main(int argc, char *argv[]) {
   struct sockaddr_in serverAddr;
   serverAddr.sin_family = AF_INET;
   serverAddr.sin_port = htons(port);
-  serverAddr.sin_addr.s_addr = inet_addr(hostname.c_str());
+  serverAddr.sin_addr.s_addr = INADDR_ANY;
 
+  // if (inet_pton(AF_INET, hostname.c_str(), &serverAddr.sin_addr) <= 0) {
+  //     printError("Invalid IP address");
+  //     return 1;
+  // }
+
+
+
+  std::cout << "change" << std::endl;
   int sock = socket(AF_INET, SOCK_DGRAM, 0);
   if (sock == -1) {
     printError("Failed to create socket");
@@ -29,7 +37,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (bind(sock, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
-    printError("Bind failed");
+    printError("Bind failed with error code: " + std::to_string(errno));
     close(sock);
     return 1;
   }
@@ -71,4 +79,9 @@ int main(int argc, char *argv[]) {
   close(sock); // Close the socket when the loop is terminated
 
   return 0;
+}
+
+
+void printError(const std::string &error) {
+  std::cerr << RED << error << RESET << std::endl;
 }
