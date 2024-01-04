@@ -15,7 +15,7 @@ using json = nlohmann::json;
 #define BMC_IP1 "192.168.1.134"
 #define TEST_PORT 12345
 
-void sendInfo(const std::string &, const std::string &, const std::string &, const int&);
+void sendInfo(const std::string &, const std::string &, const int&);
 
 int main(int argc, char *argv[]) {
 
@@ -41,17 +41,22 @@ int main(int argc, char *argv[]) {
     // json
     std::string process_json = create_info_json(boost_addr, procps_addr);
 
-    sendInfo(meminfo_str, process_json, hostname, port);
-    sleep(10);
+    json mem = json::parse(meminfo_str);
+    json pro = json::parse(process_json);
+    json mergedJson;
+    mergedJson["meminfo"] = mem;
+    mergedJson["process"] = pro;
+    std::string temp = mergedJson.dump();
+
+    sendInfo(temp, hostname, port);
+    sleep(5);
   }
   return 0;
 }
 
 // send the info
-void sendInfo(const std::string &meminfo_str, const std::string &process_json, const std::string &hostname, const int &port) {
+void sendInfo(const std::string &info, const std::string &hostname, const int &port) {
 
-  send_To_BMC(meminfo_str, hostname, port);
-  sleep(3);
-  send_To_BMC(process_json, hostname, port);
+  send_To_BMC(info, hostname, port);
   
 }

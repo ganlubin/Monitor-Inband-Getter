@@ -30,5 +30,5 @@ void addKeyToJson(nlohmann::json &json, const std::string &key) {
   for (; key[idx] >= '0' && key[idx] <= '9' && idx < key.size(); ++idx) {
     second += key[idx];
   }
-  json[first] = second;
+  json[first] = std::atoi(second.c_str());
 }
